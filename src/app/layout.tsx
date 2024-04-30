@@ -6,7 +6,7 @@ import { ConfigProvider } from "antd";
 import { Poppins } from "next/font/google";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 
-const inter = Poppins({
+const poppins = Poppins({
     display: "swap",
     subsets: ["latin"],
     weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: React.PropsWithChildren) {
     return (
         <html lang="en">
-            <body className={inter.className}>
+            <body className={poppins.className}>
                 <AntdRegistry>
                     <ConfigProvider theme={theme}>{children}</ConfigProvider>
                 </AntdRegistry>
