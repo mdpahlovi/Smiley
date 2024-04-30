@@ -43,48 +43,6 @@ const users: User[] = [
         password: "123456",
         image: "https://reqres.in/img/faces/6-image.jpg",
     },
-    {
-        id: "7",
-        email: "michael.lawson@reqres.in",
-        name: "Michael Lawson",
-        password: "123456",
-        image: "https://reqres.in/img/faces/7-image.jpg",
-    },
-    {
-        id: "8",
-        email: "lindsay.ferguson@reqres.in",
-        name: "Lindsay Ferguson",
-        password: "123456",
-        image: "https://reqres.in/img/faces/8-image.jpg",
-    },
-    {
-        id: "9",
-        email: "tobias.funke@reqres.in",
-        name: "Tobias Funke",
-        password: "123456",
-        image: "https://reqres.in/img/faces/9-image.jpg",
-    },
-    {
-        id: "10",
-        email: "byron.fields@reqres.in",
-        name: "Byron Fields",
-        password: "123456",
-        image: "https://reqres.in/img/faces/10-image.jpg",
-    },
-    {
-        id: "11",
-        email: "george.edwards@reqres.in",
-        name: "George Edwards",
-        password: "123456",
-        image: "https://reqres.in/img/faces/11-image.jpg",
-    },
-    {
-        id: "12",
-        email: "rachel.howell@reqres.in",
-        name: "Rachel Howell",
-        password: "123456",
-        image: "https://reqres.in/img/faces/12-image.jpg",
-    },
 ];
 
 export default users;
