@@ -4,30 +4,19 @@ import dayjs from "dayjs";
 import Link from "next/link";
 import { useState } from "react";
 import type { Project } from "@/types";
-import { Card, Form, Modal, Progress } from "antd";
-import { useProjectStore } from "@/hooks/useProjectHook";
+import { Card, Form, Progress } from "antd";
+import { useDeleteProject } from "./delete-project";
 import { Ribbon, Text, Title } from "@/components/export";
 import localizedFormat from "dayjs/plugin/localizedFormat";
 import EditProject, { type EditProjectData } from "./edit-project";
-import { CalendarOutlined, DeleteOutlined, EditOutlined, ExclamationCircleFilled } from "@ant-design/icons";
+import { CalendarOutlined, DeleteOutlined, EditOutlined } from "@ant-design/icons";
 
 dayjs.extend(localizedFormat);
 
 export default function ProjectCard({ id, status, name, start_date, end_date, description }: Project) {
+    const { confirmDelete } = useDeleteProject();
     const [form] = Form.useForm<EditProjectData>();
-    const { deleteProject } = useProjectStore();
     const [isModalOpen, setIsModalOpen] = useState(false);
-
-    const confirmDelete = () => {
-        Modal.confirm({
-            title: "Are You Sure?",
-            icon: <ExclamationCircleFilled />,
-            content: "Do you really want to delete the project?",
-            okButtonProps: { type: "primary", children: "Yes", danger: true },
-            cancelButtonProps: { children: "No" },
-            onOk: () => deleteProject(id),
-        });
-    };
 
     return (
         <>
@@ -44,7 +33,7 @@ export default function ProjectCard({ id, status, name, start_date, end_date, de
                         <Link key="view" href={`/dashboard/projects/${id}`}>
                             View Details
                         </Link>,
-                        <DeleteOutlined key="delete" onClick={confirmDelete} />,
+                        <DeleteOutlined key="delete" onClick={() => confirmDelete(id)} />,
                     ]}
                 >
                     <Title level={4}>{name}</Title>
