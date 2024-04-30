@@ -1,6 +1,6 @@
 "use server";
 
-import users from "@/data/user";
+import users from "@/data/users";
 import { cookies } from "next/headers";
 
 export default async function action(data: { email: string; password: string }) {

@@ -17,6 +17,9 @@ importers:
       antd:
         specifier: ^5.16.5
         version: 5.16.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      dayjs:
+        specifier: ^1.11.11
+        version: 1.11.11
       framer-motion:
         specifier: ^11.1.7
         version: 11.1.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1)

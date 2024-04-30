@@ -1,12 +1,12 @@
 import { ThemeConfig } from "antd";
 
 const theme: ThemeConfig = {
-    components: { Layout: { headerBg: "#F6FFED" } },
+    components: { Layout: { headerBg: "#FFFFFF" }, Button: { controlHeight: 40 }, Input: { controlHeight: 40 } },
     token: {
         fontFamily: "inherit",
-        colorPrimary: "#00b96b",
-        borderRadius: 2,
-        colorBgContainer: "#f6ffed",
+        colorPrimary: "#9b48dd",
+        borderRadius: 10,
+        colorBgContainer: "#FFFFFF",
     },
 };
 
