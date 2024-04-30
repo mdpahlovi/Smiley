@@ -14,5 +14,5 @@ export default async function action(data: { email: string; password: string }) 
 
     // Set user to cookies
     cookies().set("smiley_token", JSON.stringify(user), { maxAge: 60 * 60 * 24 * 1000 });
-    return { success: true, message: "Users login successfully", redirect: "/" };
+    return { success: true, message: "Users login successfully", redirect: "/dashboard" };
 }
