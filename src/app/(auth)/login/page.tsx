@@ -1,8 +1,9 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Button, Input } from "antd";
-import { Title, Text } from "@/components/export";
 import LoginForm from "./form";
+import { Title, Text } from "@/components/export";
+
+export const metadata = { title: "Login" };
 
 export default function LoginPage() {
     return (
