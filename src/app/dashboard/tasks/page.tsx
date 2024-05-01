@@ -9,9 +9,9 @@ export default function Board() {
 
     return (
         <>
-            <Column status="To Do" headingColor="text-yellow-500" tasks={tasks} />
-            <Column status="In Progress" headingColor="text-blue-500" tasks={tasks} />
-            <Column status="Done" headingColor="text-emerald-500" tasks={tasks} />
+            <Column status="To Do" color="#000000" tasks={tasks} />
+            <Column status="In Progress" color="#9b48dd" tasks={tasks} />
+            <Column status="Done" color="#22BB33" tasks={tasks} />
             <DeleteTask />
         </>
     );

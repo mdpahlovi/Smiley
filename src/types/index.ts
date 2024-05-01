@@ -15,7 +15,6 @@ export interface Project {
     end_date: string | null;
     leader: string;
     members: string[];
-    tasks: any[]; // You may want to define a type for tasks as well
 }
 
 export type TasKStatus = "To Do" | "In Progress" | "Done";

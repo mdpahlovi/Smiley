@@ -1,11 +1,19 @@
+import dayjs from "dayjs";
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { Text, Title } from "../export";
+import type { FormInstance } from "antd";
 import type { Task, TasKStatus } from "@/types";
 import { useTaskStore } from "@/hooks/useTaskHook";
+import { CalendarOutlined, EditOutlined } from "@ant-design/icons";
+import localizedFormat from "dayjs/plugin/localizedFormat";
+import { useTaskFormStore } from "@/hooks/useTaskFormHook";
 
-type StatusProps = { headingColor: string; tasks: Task[]; status: TasKStatus };
+dayjs.extend(localizedFormat);
 
-export default function Column({ headingColor, tasks, status }: StatusProps) {
+type StatusProps = { color: string; tasks: Task[]; status: TasKStatus; form: FormInstance<Omit<Task, "id">> };
+
+export default function Column({ color, tasks, status, form }: StatusProps) {
     const { setTasks } = useTaskStore();
     const [active, setActive] = useState(false);
 
@@ -101,10 +109,12 @@ export default function Column({ headingColor, tasks, status }: StatusProps) {
     const filteredTasks = tasks.filter((c) => c.status === status);
 
     return (
-        <div className="w-56 shrink-0">
-            <div className="mb-3 flex items-center justify-between">
-                <h3 className={`font-medium ${headingColor}`}>{status}</h3>
-                <span className="rounded text-sm text-neutral-400">{filteredTasks.length}</span>
+        <div className="min-w-60 shrink-0">
+            <div className="flex items-center justify-between">
+                <Title style={{ color }} level={5}>
+                    {status}
+                </Title>
+                <Text style={{ color }}>{filteredTasks.length}</Text>
             </div>
             <div
                 // @ts-ignore
@@ -112,30 +122,45 @@ export default function Column({ headingColor, tasks, status }: StatusProps) {
                 // @ts-ignore
                 onDragOver={handleDragOver}
                 onDragLeave={handleDragLeave}
-                className={`h-full w-full transition-colors ${active ? "bg-neutral-800/50" : "bg-neutral-800/0"}`}
+                className={`h-full w-full transition-colors ${active ? "bg-black/5" : ""}`}
             >
                 {filteredTasks.map((task) => (
-                    <Task key={task.id} {...task} />
+                    <Task key={task.id} {...{ task, form }} />
                 ))}
-                <div data-before="-1" data-status={status} className="my-0.5 h-0.5 w-full bg-violet-400 opacity-0" />
+                <div data-before="-1" data-status={status} className="my-0.5 h-0.5 w-full bg-[#9b48dd] opacity-0" />
             </div>
         </div>
     );
 }
 
-const Task = ({ id, description, status }: Task) => {
+const Task = ({ task, form }: { task: Task; form: FormInstance<Omit<Task, "id">> }) => {
+    const { editModal } = useTaskFormStore();
+    const { id, status, description, deadline } = task;
+
     return (
         <>
-            <div data-before={id} data-status={status} className="my-0.5 h-0.5 w-full bg-violet-400 opacity-0" />
+            <div data-before={id} data-status={status} className="my-0.5 h-0.5 w-full bg-[#9b48dd] opacity-0" />
             <motion.div
                 layout
                 layoutId={id}
                 draggable="true"
                 // @ts-ignore
                 onDragStart={(e) => e.dataTransfer.setData("id", id)}
-                className="cursor-grab rounded border border-neutral-700 bg-neutral-800 p-3 active:cursor-grabbing"
+                className="relative cursor-grab active:cursor-grabbing flex flex-col gap-1 rounded border bg-black/10 px-4 py-2.5"
             >
-                <p className="text-sm text-neutral-100">{description}</p>
+                <button
+                    className="absolute top-0 right-0 bg-white p-1.5 rounded"
+                    onClick={() => {
+                        editModal(id);
+                        form.setFieldsValue({ status, description });
+                    }}
+                >
+                    <EditOutlined />
+                </button>
+                <Text strong>{description}</Text>
+                <Text className="text-xs">
+                    <CalendarOutlined /> Deadline: {dayjs(deadline).format("LL")}
+                </Text>
             </motion.div>
         </>
     );

@@ -10,7 +10,6 @@ const projects: Project[] = [
         end_date: null,
         leader: "5",
         members: [],
-        tasks: [],
     },
 
     {
@@ -22,7 +21,6 @@ const projects: Project[] = [
         end_date: null,
         leader: "3",
         members: [],
-        tasks: [],
     },
 
     {
@@ -34,7 +32,6 @@ const projects: Project[] = [
         end_date: null,
         leader: "6",
         members: [],
-        tasks: [],
     },
     {
         id: "4",
@@ -45,7 +42,6 @@ const projects: Project[] = [
         end_date: null,
         leader: "2",
         members: [],
-        tasks: [],
     },
 
     {
@@ -57,7 +53,6 @@ const projects: Project[] = [
         end_date: null,
         leader: "4",
         members: [],
-        tasks: [],
     },
 
     {
@@ -69,7 +64,6 @@ const projects: Project[] = [
         end_date: null,
         leader: "1",
         members: [],
-        tasks: [],
     },
 ];
 

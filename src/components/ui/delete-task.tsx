@@ -24,8 +24,8 @@ export default function DeleteTask() {
             // @ts-ignore
             onDragOver={handleDragOver}
             onDragLeave={() => setActive(false)}
-            className={`mt-10 grid h-56 w-56 shrink-0 place-content-center rounded border text-3xl ${
-                active ? "border-red-800 bg-red-800/20 text-red-500" : "border-neutral-500 bg-neutral-500/20 text-neutral-500"
+            className={`mt-9 grid aspect-square min-w-60 shrink-0 place-content-center rounded border text-3xl ${
+                active ? "bg-red-900/10 text-red-500" : "bg-black/10"
             }`}
         >
             {active ? <FireFilled className="animate-bounce" /> : <DeleteOutlined />}
