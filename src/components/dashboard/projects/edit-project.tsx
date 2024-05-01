@@ -12,6 +12,8 @@ export type EditProjectData = { name: string; status: string; start_date: string
 export default function EditProject({ id, form, isModalOpen, setIsModalOpen }: EditProjectProps) {
     const { editProject } = useProjectStore();
 
+    console.log({ values: form.getFieldsValue() });
+
     const onFinish = (data: EditProjectData) => {
         editProject({ id, ...data });
         setIsModalOpen(false);

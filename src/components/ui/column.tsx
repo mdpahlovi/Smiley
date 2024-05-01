@@ -8,6 +8,7 @@ import { useTaskStore } from "@/hooks/useTaskHook";
 import { CalendarOutlined, EditOutlined } from "@ant-design/icons";
 import localizedFormat from "dayjs/plugin/localizedFormat";
 import { useTaskFormStore } from "@/hooks/useTaskFormHook";
+import { setTaskValues } from "@/constants";
 
 dayjs.extend(localizedFormat);
 
@@ -152,7 +153,7 @@ const Task = ({ task, form }: { task: Task; form: FormInstance<Omit<Task, "id">>
                     className="absolute top-0 right-0 bg-white p-1.5 rounded"
                     onClick={() => {
                         editModal(id);
-                        form.setFieldsValue({ status, description });
+                        setTaskValues(form, task);
                     }}
                 >
                     <EditOutlined />

@@ -1,18 +1,12 @@
-"use client";
+import Tasks from "./client";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
-import Column from "@/components/ui/column";
-import DeleteTask from "@/components/ui/delete-task";
-import { useTaskStore } from "@/hooks/useTaskHook";
+export const metadata = { title: "Tasks" };
 
-export default function Board() {
-    const { tasks } = useTaskStore();
+export default function TaskPage() {
+    const data = cookies().get("smiley_token");
+    if (!data || !data?.value) redirect("/login");
 
-    return (
-        <>
-            <Column status="To Do" color="#000000" tasks={tasks} />
-            <Column status="In Progress" color="#9b48dd" tasks={tasks} />
-            <Column status="Done" color="#22BB33" tasks={tasks} />
-            <DeleteTask />
-        </>
-    );
+    return <Tasks userEmail={JSON.parse(data?.value).email} />;
 }

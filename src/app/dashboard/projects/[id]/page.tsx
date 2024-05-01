@@ -4,7 +4,6 @@ import dayjs from "dayjs";
 import users from "@/data/users";
 import { useState } from "react";
 import type { Task } from "@/types";
-import { columnsData } from "@/constants";
 import { notFound } from "next/navigation";
 import Column from "@/components/ui/column";
 import { Text, Title } from "@/components/export";
@@ -13,6 +12,7 @@ import DeleteTask from "@/components/ui/delete-task";
 import { useProjectStore } from "@/hooks/useProjectHook";
 import localizedFormat from "dayjs/plugin/localizedFormat";
 import { useTaskFormStore } from "@/hooks/useTaskFormHook";
+import { columnsData, setProjectValues } from "@/constants";
 import TaskForm from "@/components/dashboard/tasks/task-form";
 import { AnimatedTooltip } from "@/components/ui/animated-tooltip";
 import AddMember from "@/components/dashboard/projects/add-member";
@@ -30,7 +30,7 @@ export default function ProjectDetailsPage({ params }: { params: { id?: string }
     const [projectForm] = Form.useForm<EditProjectData>();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [addMemberModal, setAddMemberModal] = useState(false);
-    const { tasks: all_task, addTask, editTask } = useTaskStore();
+    const { tasks: allTask, addTask, editTask } = useTaskStore();
     const { id: taskId, type, addModal, closeModal } = useTaskFormStore();
 
     const project = projects.find(({ id }) => id === params?.id);
@@ -41,7 +41,7 @@ export default function ProjectDetailsPage({ params }: { params: { id?: string }
     const leaderData = users.find(({ id }) => id === leader);
     const membersData = users.filter(({ email }) => members.includes(email));
 
-    const tasks = all_task.filter(({ project }) => project === id);
+    const tasks = allTask.filter(({ project }) => project === id);
 
     return (
         <>
@@ -57,7 +57,7 @@ export default function ProjectDetailsPage({ params }: { params: { id?: string }
                             icon={<EditOutlined />}
                             onClick={() => {
                                 setIsModalOpen(true);
-                                projectForm.setFieldsValue({ name, status, description });
+                                setProjectValues(projectForm, project);
                             }}
                         >
                             Edit

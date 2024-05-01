@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useState } from "react";
 import type { Project } from "@/types";
 import { Card, Form, Progress } from "antd";
+import { setProjectValues } from "@/constants";
 import { useDeleteProject } from "./delete-project";
 import { Ribbon, Text, Title } from "@/components/export";
 import localizedFormat from "dayjs/plugin/localizedFormat";
@@ -13,10 +14,11 @@ import { CalendarOutlined, DeleteOutlined, EditOutlined } from "@ant-design/icon
 
 dayjs.extend(localizedFormat);
 
-export default function ProjectCard({ id, status, name, start_date, end_date, description }: Project) {
+export default function ProjectCard({ project }: { project: Project }) {
     const { confirmDelete } = useDeleteProject();
     const [form] = Form.useForm<EditProjectData>();
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const { id, status, name, start_date, end_date } = project;
 
     return (
         <>
@@ -27,7 +29,7 @@ export default function ProjectCard({ id, status, name, start_date, end_date, de
                             key="edit"
                             onClick={() => {
                                 setIsModalOpen(true);
-                                form.setFieldsValue({ name, status, description });
+                                setProjectValues(form, project);
                             }}
                         />,
                         <Link key="view" href={`/dashboard/projects/${id}`}>
