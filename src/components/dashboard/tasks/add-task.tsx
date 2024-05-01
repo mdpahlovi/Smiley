@@ -1,13 +1,19 @@
 import { useState } from "react";
-import type { TasKStatus } from "@/types";
+import type { Task, TasKStatus } from "@/types";
 import { PlusOutlined } from "@ant-design/icons";
 import { Button, DatePicker, Form, Input, Modal, Select } from "antd";
+import AddMember from "../projects/add-member";
+import users from "@/data/users";
+import { useProjectStore } from "@/hooks/useProjectHook";
 
 export default function AddTask({ status }: { status: TasKStatus }) {
-    const [form] = Form.useForm();
+    const { projects } = useProjectStore();
+    const [form] = Form.useForm<Omit<Task, "id">>();
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const onFinish = (data: { description: string; deadline: string; assignee: string }) => {};
+    const onFinish = (data: Omit<Task, "id">) => {
+        console.log(data);
+    };
 
     return (
         <>
@@ -27,7 +33,22 @@ export default function AddTask({ status }: { status: TasKStatus }) {
                             <DatePicker className="w-full" />
                         </Form.Item>
                     </div>
-
+                    <Form.Item name="members" label="Members" rules={[{ required: true }]}>
+                        <AddMember
+                            options={users}
+                            value={form.getFieldValue("members")}
+                            onChange={(value) => form.setFieldValue("members", value)}
+                        />
+                    </Form.Item>
+                    <Form.Item name="project" label="Project" rules={[{ required: true }]}>
+                        <Select>
+                            {projects.map((project) => (
+                                <Select.Option key={project.id} value={project.id}>
+                                    {project.name}
+                                </Select.Option>
+                            ))}
+                        </Select>
+                    </Form.Item>
                     <Form.Item>
                         <div className="mt-2 -mb-4 flex justify-end gap-4">
                             <Button onClick={() => setIsModalOpen(false)}>Cancel</Button>
