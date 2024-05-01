@@ -1,6 +1,7 @@
 "use client";
 
 import dayjs from "dayjs";
+import users from "@/data/users";
 import { useState } from "react";
 import { notFound } from "next/navigation";
 import { Text, Title } from "@/components/export";
@@ -8,61 +9,27 @@ import { useProjectStore } from "@/hooks/useProjectHook";
 import localizedFormat from "dayjs/plugin/localizedFormat";
 import { Badge, Button, Divider, Form, Progress } from "antd";
 import { AnimatedTooltip } from "@/components/ui/animated-tooltip";
+import AddMember from "@/components/dashboard/projects/add-member";
 import EditProject, { EditProjectData } from "@/components/dashboard/projects/edit-project";
 import { useDeleteProject } from "@/components/dashboard/projects/delete-project";
 import { CalendarOutlined, DeleteOutlined, EditOutlined, UserAddOutlined } from "@ant-design/icons";
 
 dayjs.extend(localizedFormat);
 
-const people = [
-    {
-        id: 1,
-        name: "John Doe",
-        designation: "Software Engineer",
-        image: "https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3387&q=80",
-    },
-    {
-        id: 2,
-        name: "Robert Johnson",
-        designation: "Product Manager",
-        image: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXZhdGFyfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
-    },
-    {
-        id: 3,
-        name: "Jane Smith",
-        designation: "Data Scientist",
-        image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8YXZhdGFyfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
-    },
-    {
-        id: 4,
-        name: "Emily Davis",
-        designation: "UX Designer",
-        image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGF2YXRhcnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60",
-    },
-    {
-        id: 5,
-        name: "Tyler Durden",
-        designation: "Soap Developer",
-        image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3540&q=80",
-    },
-    {
-        id: 6,
-        name: "Dora",
-        designation: "The Explorer",
-        image: "https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3534&q=80",
-    },
-];
-
 export default function ProjectDetailsPage({ params }: { params: { id?: string } }) {
     const { projects } = useProjectStore();
     const { confirmDelete } = useDeleteProject();
     const [form] = Form.useForm<EditProjectData>();
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [addMemberModal, setAddMemberModal] = useState(false);
 
     const project = projects.find(({ id }) => id === params?.id);
     if (!params?.id || !project) notFound();
 
     const { id, name, status, description, start_date, end_date, leader, members, tasks } = project;
+
+    const leaderData = users.find(({ id }) => id === leader);
+    const membersData = users.filter(({ email }) => members.includes(email));
 
     return (
         <>
@@ -71,7 +38,7 @@ export default function ProjectDetailsPage({ params }: { params: { id?: string }
                 <Badge count={status} />
                 <div className="my-6 flex max-md:flex-col justify-between gap-6">
                     <div className="flex gap-4">
-                        <Button type="primary" icon={<UserAddOutlined />}>
+                        <Button type="primary" icon={<UserAddOutlined />} onClick={() => setAddMemberModal(true)}>
                             Add Member
                         </Button>
                         <Button
@@ -88,7 +55,7 @@ export default function ProjectDetailsPage({ params }: { params: { id?: string }
                         </Button>
                     </div>
                     <div className="flex items-center">
-                        <AnimatedTooltip items={people} />
+                        <AnimatedTooltip items={[leaderData!, ...membersData]} />
                     </div>
                 </div>
                 <div className="grid grid-cols-2 md:grid-cols-[3.5fr_3.5fr_5fr] gap-4">
@@ -118,6 +85,7 @@ export default function ProjectDetailsPage({ params }: { params: { id?: string }
                 <Text>{description}</Text>
             </div>
             <EditProject {...{ id, form, isModalOpen, setIsModalOpen }} />
+            <AddMember {...{ id, addMemberModal, setAddMemberModal }} />
         </>
     );
 }
