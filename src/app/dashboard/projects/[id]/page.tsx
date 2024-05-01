@@ -10,6 +10,7 @@ import { Text, Title } from "@/components/export";
 import { useTaskStore } from "@/hooks/useTaskHook";
 import DeleteTask from "@/components/ui/delete-task";
 import { useProjectStore } from "@/hooks/useProjectHook";
+import { useProgressHook } from "@/hooks/useProgressHook";
 import localizedFormat from "dayjs/plugin/localizedFormat";
 import { useTaskFormStore } from "@/hooks/useTaskFormHook";
 import { columnsData, setProjectValues } from "@/constants";
@@ -24,6 +25,7 @@ import { CalendarOutlined, DeleteOutlined, EditOutlined, PlusOutlined, UserAddOu
 dayjs.extend(localizedFormat);
 
 export default function ProjectDetailsPage({ params }: { params: { id?: string } }) {
+    const progress = useProgressHook(params.id!);
     const { confirmDelete } = useDeleteProject();
     const { projects, addMember } = useProjectStore();
     const [taskForm] = Form.useForm<Omit<Task, "id">>();
@@ -87,7 +89,7 @@ export default function ProjectDetailsPage({ params }: { params: { id?: string }
                     </div>
                     <div className="max-md:col-span-full">
                         <Title level={5}>Progress:</Title>
-                        <Progress type="line" percent={75} />
+                        <Progress type="line" percent={Math.round(progress)} />
                     </div>
                 </div>
                 <Divider />

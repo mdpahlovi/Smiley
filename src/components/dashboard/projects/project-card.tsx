@@ -8,6 +8,7 @@ import { Card, Form, Progress } from "antd";
 import { setProjectValues } from "@/constants";
 import { useDeleteProject } from "./delete-project";
 import { Ribbon, Text, Title } from "@/components/export";
+import { useProgressHook } from "@/hooks/useProgressHook";
 import localizedFormat from "dayjs/plugin/localizedFormat";
 import EditProject, { type EditProjectData } from "./edit-project";
 import { CalendarOutlined, DeleteOutlined, EditOutlined } from "@ant-design/icons";
@@ -15,6 +16,7 @@ import { CalendarOutlined, DeleteOutlined, EditOutlined } from "@ant-design/icon
 dayjs.extend(localizedFormat);
 
 export default function ProjectCard({ project }: { project: Project }) {
+    const progress = useProgressHook(project.id);
     const { confirmDelete } = useDeleteProject();
     const [form] = Form.useForm<EditProjectData>();
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -43,7 +45,7 @@ export default function ProjectCard({ project }: { project: Project }) {
                         <CalendarOutlined /> Stated On: {dayjs(start_date).format("LL")}
                     </Text>
                     <div className="my-2 flex justify-center">
-                        <Progress type="circle" percent={75} />
+                        <Progress type="circle" percent={Math.round(progress)} />
                     </div>
                     <Text strong>
                         <CalendarOutlined /> End On: {end_date ? dayjs(end_date).format("LL") : "Date Not Specified"}
