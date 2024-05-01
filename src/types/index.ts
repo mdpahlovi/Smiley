@@ -17,3 +17,15 @@ export interface Project {
     members: string[];
     tasks: any[]; // You may want to define a type for tasks as well
 }
+
+export type TasKStatus = "To Do" | "In Progress" | "Done";
+
+export interface Task {
+    id: string;
+    description: string;
+    deadline: string;
+    members: string[];
+    status: TasKStatus;
+    assignee: string;
+    project: string;
+}

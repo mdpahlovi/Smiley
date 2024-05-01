@@ -20,7 +20,7 @@ export default function DashboardLayout({ children }: React.PropsWithChildren) {
             <Layout>
                 <Header className="px-6" />
                 <Content className="m-6 mb-0">
-                    <div className="bg-[#FFFFFF] p-6 min-h-[calc(100vh_-9.5rem)]">{children}</div>
+                    <div className="bg-[#FFFFFF] p-6 min-h-[calc(100vh_-9.5rem)] flex gap-6">{children}</div>
                 </Content>
                 <Footer className="h-16 text-center">Smiley Task ©{new Date().getFullYear()} Created by Ant Design</Footer>
             </Layout>
