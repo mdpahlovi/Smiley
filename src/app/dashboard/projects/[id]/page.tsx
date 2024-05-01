@@ -51,7 +51,7 @@ export default function ProjectDetailsPage({ params }: { params: { id?: string }
                 <Title level={3}>{name}</Title>
                 <Badge count={status} />
                 <div className="my-6 flex max-md:flex-col justify-between gap-6">
-                    <div className="flex gap-4">
+                    <div className="flex max-xs:flex-col gap-4">
                         <Button type="primary" icon={<UserAddOutlined />} onClick={() => setAddMemberModal(true)}>
                             Add Member
                         </Button>
@@ -105,7 +105,7 @@ export default function ProjectDetailsPage({ params }: { params: { id?: string }
                         Add Task
                     </Button>
                 </div>
-                <div className="grid grid-cols-4 gap-6 overflow-auto">
+                <div className="flex min-[1280px]:grid min-[1280px]:grid-cols-4 gap-6 overflow-auto">
                     {columnsData.map(({ status, color }, idx) => (
                         <Column key={idx} {...{ status, color, tasks }} form={taskForm} />
                     ))}

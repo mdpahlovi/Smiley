@@ -23,12 +23,12 @@ export default function Tasks({ userEmail }: { userEmail: string }) {
 
     return (
         <>
-            <div className="mb-4 grid grid-cols-[5fr_7fr] gap-6">
+            <div className="mb-4 grid md:grid-cols-[5fr_7fr] gap-6">
                 <Input.Search value={search} onChange={(e) => setSearch(e.target.value)} />
                 {/* @ts-ignore */}
                 <DatePicker.RangePicker value={range} onChange={setRange} />
             </div>
-            <div className="min-h-[calc(100vh-16rem)] grid grid-cols-4 gap-6 overflow-auto">
+            <div className="min-h-[calc(100vh-16rem)] flex min-[1280px]:grid min-[1280px]:grid-cols-4 gap-6 overflow-auto">
                 {columnsData.map(({ status, color }, idx) => (
                     <Column key={idx} {...{ status, color, tasks, form }} />
                 ))}

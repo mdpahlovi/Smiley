@@ -10,7 +10,7 @@ export default function DashboardHome() {
     if (!data || !data?.value) redirect("/login");
 
     return (
-        <div className="min-h-[calc(100vh-12.5rem)] flex flex-col justify-center items-center">
+        <div className="min-h-[calc(100vh-12.5rem)] flex flex-col justify-center items-center text-center">
             <Link href="/dashboard">
                 <Image src="/logo.png" alt="" style={{ marginBottom: 48 }} width={160} height={48} />
             </Link>

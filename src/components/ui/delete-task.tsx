@@ -24,7 +24,7 @@ export default function DeleteTask() {
             // @ts-ignore
             onDragOver={handleDragOver}
             onDragLeave={() => setActive(false)}
-            className={`mt-9 grid aspect-square min-w-60 shrink-0 place-content-center rounded border text-3xl ${
+            className={`mt-9 aspect-square min-w-60 shrink-0 flex justify-center items-center rounded border text-3xl ${
                 active ? "bg-red-900/10 text-red-500" : "bg-black/10"
             }`}
         >
