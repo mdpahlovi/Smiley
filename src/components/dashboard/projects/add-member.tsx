@@ -1,39 +1,28 @@
-import users from "@/data/users";
+import type { User } from "@/types";
+import { Avatar, Select } from "antd";
 import { Text } from "@/components/export";
-import { AutoComplete, Avatar, Modal } from "antd";
-import { useProjectStore } from "@/hooks/useProjectHook";
 
-type AddMemberProps = {
-    id: string;
-    addMemberModal: boolean;
-    setAddMemberModal: React.Dispatch<React.SetStateAction<boolean>>;
-};
+type AddMemberProps = { value: string[]; onChange: (value: string[]) => void; options: User[] };
 
-export default function AddMember({ id, addMemberModal, setAddMemberModal }: AddMemberProps) {
-    const { addMember } = useProjectStore();
-
+export default function AddMember({ value, onChange, options }: AddMemberProps) {
     return (
-        <Modal title="Add Member" open={addMemberModal} onCancel={() => setAddMemberModal(false)} footer={false}>
-            <AutoComplete
-                className="w-full"
-                options={users.map(({ image, name, email }) => ({
-                    value: email,
-                    label: (
-                        <div className="flex items-center gap-2">
-                            <Avatar size="large" src={image} />
-                            <div className="flex flex-col">
-                                <Text>{name}</Text>
-                                <Text>{email}</Text>
-                            </div>
-                        </div>
-                    ),
-                }))}
-                onSelect={(value) => {
-                    setAddMemberModal(false);
-                    addMember({ id, email: value });
-                }}
-                placeholder="input here"
-            />
-        </Modal>
+        <Select
+            allowClear
+            mode="multiple"
+            style={{ width: "100%" }}
+            placeholder="Please Select Member"
+            value={value}
+            onChange={onChange}
+            onClear={() => onChange([])}
+            options={options.map(({ image, name, email }) => ({
+                value: email,
+                label: (
+                    <div className="flex items-center gap-2">
+                        <Avatar src={image} />
+                        <Text>{name}</Text>
+                    </div>
+                ),
+            }))}
+        />
     );
 }

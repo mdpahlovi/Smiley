@@ -7,7 +7,7 @@ import { notFound } from "next/navigation";
 import { Text, Title } from "@/components/export";
 import { useProjectStore } from "@/hooks/useProjectHook";
 import localizedFormat from "dayjs/plugin/localizedFormat";
-import { Badge, Button, Divider, Form, Progress } from "antd";
+import { Badge, Button, Divider, Form, Modal, Progress } from "antd";
 import { AnimatedTooltip } from "@/components/ui/animated-tooltip";
 import AddMember from "@/components/dashboard/projects/add-member";
 import EditProject, { EditProjectData } from "@/components/dashboard/projects/edit-project";
@@ -17,9 +17,9 @@ import { CalendarOutlined, DeleteOutlined, EditOutlined, UserAddOutlined } from 
 dayjs.extend(localizedFormat);
 
 export default function ProjectDetailsPage({ params }: { params: { id?: string } }) {
-    const { projects } = useProjectStore();
     const { confirmDelete } = useDeleteProject();
     const [form] = Form.useForm<EditProjectData>();
+    const { projects, addMember } = useProjectStore();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [addMemberModal, setAddMemberModal] = useState(false);
 
@@ -85,7 +85,13 @@ export default function ProjectDetailsPage({ params }: { params: { id?: string }
                 <Text>{description}</Text>
             </div>
             <EditProject {...{ id, form, isModalOpen, setIsModalOpen }} />
-            <AddMember {...{ id, addMemberModal, setAddMemberModal }} />
+            <Modal title="Add Member" open={addMemberModal} onCancel={() => setAddMemberModal(false)} footer={false}>
+                <AddMember
+                    value={members}
+                    onChange={(value) => addMember({ id, emails: value })}
+                    options={users.filter(({ id }) => id !== leader)}
+                />
+            </Modal>
         </>
     );
 }
