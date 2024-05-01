@@ -12,7 +12,7 @@ export default function DashboardLayout({ children }: React.PropsWithChildren) {
     return (
         <Layout>
             <Sider theme="light" breakpoint="lg" collapsedWidth="0">
-                <Link href="/" className="h-16 flex justify-center items-center">
+                <Link href="/dashboard" className="h-16 flex justify-center items-center">
                     <Image src="/logo.png" alt="" width={144} height={44} />
                 </Link>
                 <DashboardMenu />

@@ -10,7 +10,7 @@ export default function LoginPage() {
         <div className="flex h-screen justify-center">
             <div className="relative z-10 flex flex-1 bg-white px-6 py-10 shadow-2xl sm:items-center md:flex-none md:px-28">
                 <main className="mx-auto w-full max-w-md md:w-96 md:max-w-sm">
-                    <Link href="/">
+                    <Link href="/dashboard">
                         <Image src="/logo.png" alt="" width={160} height={48} />
                     </Link>
                     <div className="mt-12 mb-8">
