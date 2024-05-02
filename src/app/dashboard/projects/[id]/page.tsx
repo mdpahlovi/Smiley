@@ -5,18 +5,17 @@ import users from "@/data/users";
 import { useState } from "react";
 import type { Task } from "@/types";
 import { notFound } from "next/navigation";
-import Column from "@/components/ui/column";
+import { setProjectValues } from "@/constants";
 import { Text, Title } from "@/components/export";
 import { useTaskStore } from "@/hooks/useTaskHook";
-import DeleteTask from "@/components/ui/delete-task";
 import { useProjectStore } from "@/hooks/useProjectHook";
 import { useProgressHook } from "@/hooks/useProgressHook";
 import localizedFormat from "dayjs/plugin/localizedFormat";
 import { useTaskFormStore } from "@/hooks/useTaskFormHook";
-import { columnsData, setProjectValues } from "@/constants";
 import TaskForm from "@/components/dashboard/tasks/task-form";
 import { AnimatedTooltip } from "@/components/ui/animated-tooltip";
 import AddMember from "@/components/dashboard/projects/add-member";
+import KanbanBoard from "@/components/dashboard/tasks/kanban-board";
 import { Badge, Button, Divider, Form, Modal, Progress } from "antd";
 import { useDeleteProject } from "@/components/dashboard/projects/delete-project";
 import EditProject, { EditProjectData } from "@/components/dashboard/projects/edit-project";
@@ -105,13 +104,7 @@ export default function ProjectDetailsPage({ params }: { params: { id?: string }
                         Add Task
                     </Button>
                 </div>
-                <div className="flex min-[1280px]:grid min-[1280px]:grid-cols-4 gap-6 overflow-auto">
-                    {columnsData.map(({ status, color }, idx) => (
-                        <Column key={idx} {...{ status, color, tasks }} form={taskForm} />
-                    ))}
-
-                    <DeleteTask />
-                </div>
+                <KanbanBoard form={taskForm} tasks={tasks} />
             </div>
             <EditProject form={projectForm} {...{ id, isModalOpen, setIsModalOpen }} />
             <Modal title="Add Member" open={addMemberModal} onCancel={() => setAddMemberModal(false)} footer={false}>
